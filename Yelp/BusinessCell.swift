@@ -26,7 +26,10 @@ class BusinessCell: UITableViewCell {
             addressLabel.text = business.address
             reviewLabel.text = "\(business.reviewCount!) Reviews"
             distanceLabel.text = business.distance
-            thumbImage.setImageWith(business.imageURL!)
+            if let url = business.imageURL {
+                thumbImage.setImageWith(url)
+            }
+            
             reviewImage.setImageWith(business.ratingImageURL!)
         }
     }
@@ -36,6 +39,8 @@ class BusinessCell: UITableViewCell {
         // Initialization code
         thumbImage.layer.cornerRadius = 5
         thumbImage.clipsToBounds = true
+        
+        nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
