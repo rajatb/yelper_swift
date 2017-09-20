@@ -7,13 +7,17 @@
 //
 
 import UIKit
+import MBProgressHUD
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating {
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIScrollViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     var businesses: [Business]!
     let refreshControl = UIRefreshControl()
     let searchController = UISearchController(searchResultsController: nil)
+    
+    var isMoreDataLoading = false
+    var searchTerm: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,11 +46,28 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     // MARK: -Network Calls
     func getData(term: String){
-        Business.searchWithTerm(term: term, completion: { (businesses: [Business]?, error: Error?) -> Void in
+        // If any previous calls are still going
+        MBProgressHUD.hide(for: self.view, animated: true)
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        searchTerm = term
+   
+        Business.searchWithTerm(term: term, offset: 0, completion: { (businesses: [Business]?, error: Error?) -> Void in
             
             self.businesses = businesses
             self.tableView.reloadData()
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }
+        )
+    }
+    
+    func getDataInfiniteScroll(){
+        Business.searchWithTerm(term: self.searchTerm!, offset: self.businesses?.count ?? 0, completion: { (businesses: [Business]?, error: Error?) -> Void in
             
+            if let businesses = businesses {
+                self.businesses? += businesses
+            }
+            self.isMoreDataLoading = false
+            self.tableView.reloadData()
         }
         )
     }
@@ -60,6 +81,10 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         searchController.searchBar.sizeToFit()
         self.navigationItem.titleView = searchController.searchBar
         searchController.hidesNavigationBarDuringPresentation = false
+        
+        let filterButton: UIBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: nil)
+        self.navigationItem.leftBarButtonItem = filterButton
+        
         
     }
     
@@ -96,6 +121,20 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: - Scrolling Code
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading){
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                isMoreDataLoading = true
+                getDataInfiniteScroll()
+            }
+        }
     }
     
     /*
