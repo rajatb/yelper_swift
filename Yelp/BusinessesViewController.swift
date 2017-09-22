@@ -12,6 +12,7 @@ import MBProgressHUD
 class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIScrollViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     
+    
     var businesses: [Business]!
     let refreshControl = UIRefreshControl()
     let searchController = UISearchController(searchResultsController: nil)

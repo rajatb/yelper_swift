@@ -154,7 +154,77 @@
                     <view key="view" contentMode="scaleToFill" id="Qk7-Mk-Ddr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Fav-eg-hW8">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="filterCell" rowHeight="40" id="Pof-gT-GG4" customClass="FilterCell" customModule="Yelp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="40"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pof-gT-GG4" id="Uye-aE-PmA">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="39"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GdY-xb-aAs">
+                                                    <rect key="frame" x="20" y="8" width="58.5" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="GdY-xb-aAs" secondAttribute="bottom" constant="10" id="GzR-of-rtx"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GdY-xb-aAs" secondAttribute="trailing" constant="8" id="SGK-0V-E4q"/>
+                                                <constraint firstItem="GdY-xb-aAs" firstAttribute="top" secondItem="Uye-aE-PmA" secondAttribute="top" constant="8" id="TD6-Qe-4cd"/>
+                                                <constraint firstItem="GdY-xb-aAs" firstAttribute="leading" secondItem="Uye-aE-PmA" secondAttribute="leading" constant="20" id="g8b-r7-b8P"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="displayLabel" destination="GdY-xb-aAs" id="kta-0h-YQo"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="switchCell" rowHeight="40" id="xLG-UH-gjh" customClass="SwitchCell" customModule="Yelp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="68" width="375" height="40"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xLG-UH-gjh" id="rTR-FJ-5WN">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="39"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lga-aM-G65">
+                                                    <rect key="frame" x="308" y="3" width="51" height="31"/>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offering a Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ws3-6U-aFl">
+                                                    <rect key="frame" x="21" y="8" width="122.5" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Lga-aM-G65" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ws3-6U-aFl" secondAttribute="trailing" constant="20" id="1PU-Mc-Wmf"/>
+                                                <constraint firstItem="Ws3-6U-aFl" firstAttribute="top" secondItem="rTR-FJ-5WN" secondAttribute="top" constant="8" id="CCV-Z4-2oG"/>
+                                                <constraint firstAttribute="bottom" secondItem="Lga-aM-G65" secondAttribute="bottom" constant="5" id="MaL-Py-kza"/>
+                                                <constraint firstAttribute="trailing" secondItem="Lga-aM-G65" secondAttribute="trailing" constant="18" id="XfC-31-BTD"/>
+                                                <constraint firstItem="Ws3-6U-aFl" firstAttribute="leading" secondItem="rTR-FJ-5WN" secondAttribute="leading" constant="21" id="d6F-e2-1bw"/>
+                                                <constraint firstItem="Lga-aM-G65" firstAttribute="top" secondItem="rTR-FJ-5WN" secondAttribute="top" constant="3" id="w9T-sj-71S"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ws3-6U-aFl" secondAttribute="bottom" constant="10" id="xTb-fc-ndF"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="displayLabel" destination="rTR-FJ-5WN" id="yge-70-lBb"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Fav-eg-hW8" secondAttribute="trailing" id="BfY-Wi-pvQ"/>
+                            <constraint firstItem="Fav-eg-hW8" firstAttribute="leading" secondItem="Qk7-Mk-Ddr" secondAttribute="leading" id="Cha-HX-Jlc"/>
+                            <constraint firstItem="5Ld-Xn-xxr" firstAttribute="top" secondItem="Fav-eg-hW8" secondAttribute="bottom" id="N55-el-KEj"/>
+                            <constraint firstItem="Fav-eg-hW8" firstAttribute="top" secondItem="Qk7-Mk-Ddr" secondAttribute="top" id="Wvo-P5-t5h"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Filter" id="xSW-bM-BEZ">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="84U-BW-F7o">
@@ -168,6 +238,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="Fav-eg-hW8" id="Gs6-b1-qbn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h5P-7b-VfS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
