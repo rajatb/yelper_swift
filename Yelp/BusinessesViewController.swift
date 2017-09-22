@@ -43,8 +43,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
          */
         
     }
-    
-    // MARK: -Network Calls
+        // MARK: -Network Calls
     func getData(term: String){
         // If any previous calls are still going
         MBProgressHUD.hide(for: self.view, animated: true)
@@ -82,8 +81,8 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         self.navigationItem.titleView = searchController.searchBar
         searchController.hidesNavigationBarDuringPresentation = false
         
-        let filterButton: UIBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: nil)
-        self.navigationItem.leftBarButtonItem = filterButton
+//        let filterButton: UIBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: nil)
+//        self.navigationItem.leftBarButtonItem = filterButton
         
         
     }
