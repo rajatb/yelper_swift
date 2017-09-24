@@ -127,12 +127,29 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         case "filterCell":
             cell = tableView.dequeueReusableCell(withIdentifier: "filterCell")
             let filterCell = cell as! FilterCell
-            filterCell.displayLabel.text = sections?[section_index]?.data?[row].0
-            if sections?[section_index]?.checked_index == row {
-                cell?.accessoryType = UITableViewCellAccessoryType.checkmark
+            // Change the index from data depending if its collapsed
+            var rowValue : Int = row
+            if (collapsed[section_index] ?? true) {
+                rowValue = sections?[section_index]?.checked_index ?? 0
+            }
+            filterCell.displayLabel.text = sections?[section_index]?.data?[rowValue].0
+            if sections?[section_index]?.checked_index == rowValue {
+                //if its collapsed show a down arrow
+                if (collapsed[section_index] ?? true) {
+                    var imageView : UIImageView
+                    let rect = CGRect(x: 0, y: 0, width: 20, height: 20)
+                    imageView = UIImageView(frame: rect)
+                    imageView.image = UIImage(named:"navigate-down")
+                    cell?.accessoryView = imageView
+                } else {
+                    cell?.accessoryType = UITableViewCellAccessoryType.checkmark
+                }
+                
             } else {
                 cell?.accessoryType = UITableViewCellAccessoryType.none
             }
+            
+            
         case "switchCell":
             cell = tableView.dequeueReusableCell(withIdentifier: "switchCell")
             let switchCell = cell as! SwitchCell
@@ -178,9 +195,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cellType = sections?[section_index]?.cellType ?? "filterCell"
         
         if cellType == "filterCell" {
+            // if collapsed and its clicked don't change the index
+            if !(collapsed[section_index] ?? true){
+               sections?[section_index]?.checked_index = row
+            }
             //toggle collapsed
             collapsed[section_index] = !(collapsed[section_index] ?? true)
-            sections?[section_index]?.checked_index = row
+           
         }
         tableView.reloadSections(IndexSet(integer: section_index), with: .automatic)
     }
