@@ -141,10 +141,16 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     func filterViewController(filterViewController: FilterViewController, didUpdateFilters filter: [String: Any]){
         let categories = filter["categories"] as? [String]
         let isDeal = filter["deals"] as? Bool
-        
-        Business.searchWithTerm(term: "Resturants", offset: 0, sort: nil, categories: categories, deals: isDeal) { (businesses, error) in
+        let sortBy = filter["sortBy"] as! YelpSortMode
+        let distance = filter["distance"] as! Int
+       
+        // If any previous calls are still going
+        MBProgressHUD.hide(for: self.view, animated: true)
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        Business.searchWithTerm(term: "Resturants", offset: 0, sort: sortBy, categories: categories, deals: isDeal, radius: distance) { (businesses, error) in
             self.businesses = businesses
             self.tableView.reloadData()
+            MBProgressHUD.hide(for: self.view, animated: true)
         }
     }
     

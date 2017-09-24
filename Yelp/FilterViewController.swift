@@ -17,6 +17,7 @@ struct SectionStruct {
     var cellType: String?
     var data: [(String, Any)]?
     var results: [Int: Bool]=[Int: Bool]()
+    var checked_index : Int = 0
 }
 
 class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate {
@@ -25,20 +26,20 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     let dealsSection: SectionStruct = SectionStruct(headerTitle: "Deals", cellType: "switchCell",
                                                     data:[("Offering Deals", "Offering Deals")],
-                                                    results:[Int: Bool]())
+                                                    results:[Int: Bool](), checked_index: 0)
     let distanceSection: SectionStruct = SectionStruct(headerTitle: "Distance", cellType: "filterCell",
-                                                       data:[("Auto", ""), ("0.2 miles", "0.2"),
-                                                             ("1 mile", "1"), ("5 miles", "5"),
-                                                             ("10 miles", "10"), ("20 miles", "20")],
-                                                       results:[Int: Bool]())
+                                                       data:[("Auto", 8047), ("0.2 miles", 321),
+                                                             ("1 mile", 1610), ("5 miles", 8046),
+                                                             ("10 miles", 16100), ("20 miles", 32187)],
+                                                       results:[Int: Bool](), checked_index: 0)
     let sortBySection: SectionStruct = SectionStruct(headerTitle: "SortBy", cellType: "filterCell",
                                                        data:[("Best Match", YelpSortMode.bestMatched), ("Distance", YelpSortMode.distance),
                                                              ("Highest Rates", YelpSortMode.highestRated)],
-                                                       results:[Int: Bool]())
+                                                       results:[Int: Bool](), checked_index: 0)
     let categorySection: SectionStruct = SectionStruct(headerTitle: "Category", cellType: "switchCell",
                                                     data:[("African", "african"), ("Afghan", "afghani"),
                                                           ("American", "tradamerican"),("Arabic","Arabian"), ("Indian", "indpak")],
-                                                    results:[Int: Bool]())
+                                                    results:[Int: Bool](), checked_index: 0)
     
     
     var sections: [Int:SectionStruct]?
@@ -82,6 +83,18 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if categories.count > 0 {
             filters["categories"] = categories
         }
+        
+        //Get distance
+        let row_selected = sections?[1]?.checked_index
+        let distance_filter = sections?[1]?.data?[row_selected!].1 as? Int
+        filters["distance"] = distance_filter
+        
+        //Sort By
+        let sort_row_selected = sections?[2]?.checked_index
+        let sortBy = sections?[2]?.data?[sort_row_selected!].1 as? YelpSortMode ?? YelpSortMode.bestMatched
+        filters["sortBy"] = sortBy
+
+        
         //Add the categories in filter if more that 0
         delegate?.filterViewController?(filterViewController: self, didUpdateFilters: filters)
         //print(sections?[3]?.results)
@@ -108,8 +121,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell = tableView.dequeueReusableCell(withIdentifier: "filterCell")
             let filterCell = cell as! FilterCell
             filterCell.displayLabel.text = sections?[section_index]?.data?[row].0
-            let checked = sections?[section_index]?.results[row] ?? false
-            if checked {
+            if sections?[section_index]?.checked_index == row {
                 cell?.accessoryType = UITableViewCellAccessoryType.checkmark
             } else {
                 cell?.accessoryType = UITableViewCellAccessoryType.none
@@ -150,6 +162,20 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections?[section]?.headerTitle
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //take care of checkmarks for filter . Change the index and reload. Make sure it is un collapsed
+        print("Row got selected")
+        let section_index = indexPath.section
+        let row = indexPath.row
+        let cellType = sections?[section_index]?.cellType ?? "filterCell"
+        
+        if cellType == "filterCell" {
+            sections?[section_index]?.checked_index = row
+        }
+        tableView.reloadData()
+    }
+    
     
     // MARK: - SwitchCell Delegate
     func switchCell(switchCell: SwitchCell, didChangeValue value: Bool){
