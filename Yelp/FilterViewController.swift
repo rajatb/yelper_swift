@@ -46,6 +46,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     weak var delegate: FilterViewControllerDelegate?
     
+    var collapsed:[Int: Bool] = [Int:Bool]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -104,8 +106,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - TableView Setup
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-       return sections?[section]?.data!.count ?? 0
-        
+        let cellType = sections?[section]?.cellType ?? "filterCell"
+        if cellType == "filterCell" {
+            return  (collapsed[section] ?? true) ? 1 : sections?[section]?.data!.count ?? 0
+        } else {
+            return sections?[section]?.data!.count ?? 0
+        }
+       
     }
 
     
@@ -171,9 +178,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cellType = sections?[section_index]?.cellType ?? "filterCell"
         
         if cellType == "filterCell" {
+            //toggle collapsed
+            collapsed[section_index] = !(collapsed[section_index] ?? true)
             sections?[section_index]?.checked_index = row
         }
-        tableView.reloadData()
+        tableView.reloadSections(IndexSet(integer: section_index), with: .automatic)
     }
     
     
