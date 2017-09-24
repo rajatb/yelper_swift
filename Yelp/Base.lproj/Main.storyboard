@@ -46,7 +46,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tapas Bars, Grocery, Vegan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ekt-Ow-TXc">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tapas Bars, Grocery, Vegan" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ekt-Ow-TXc">
                                                     <rect key="frame" x="81" y="50" width="167" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -100,6 +100,7 @@
                                                 <constraint firstItem="5mt-HF-FF2" firstAttribute="top" secondItem="6pz-Dh-DGy" secondAttribute="top" constant="8" id="Zjg-EQ-YmV"/>
                                                 <constraint firstItem="yAK-SC-XsM" firstAttribute="top" secondItem="6pz-Dh-DGy" secondAttribute="top" constant="8" id="jS4-da-WZb"/>
                                                 <constraint firstItem="Fdr-kx-oCd" firstAttribute="top" secondItem="6pz-Dh-DGy" secondAttribute="top" constant="8" id="nle-ZR-ml6"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ekt-Ow-TXc" secondAttribute="trailing" constant="8" id="pIJ-w0-jnR"/>
                                                 <constraint firstItem="ph6-vL-554" firstAttribute="leading" secondItem="yAK-SC-XsM" secondAttribute="trailing" constant="8" id="paF-Bv-6mO"/>
                                                 <constraint firstItem="lyk-zV-hKL" firstAttribute="top" secondItem="5mt-HF-FF2" secondAttribute="bottom" constant="3" id="tbb-lu-NwT"/>
                                                 <constraint firstItem="Fdr-kx-oCd" firstAttribute="leading" secondItem="yAK-SC-XsM" secondAttribute="trailing" constant="8" id="utT-Qz-Sdc"/>
@@ -212,7 +213,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="displayLabel" destination="rTR-FJ-5WN" id="yge-70-lBb"/>
+                                            <outlet property="displayLabel" destination="Ws3-6U-aFl" id="aYa-kX-sKx"/>
+                                            <outlet property="onSwitch" destination="Lga-aM-G65" id="Bt4-hs-qlo"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -232,7 +234,7 @@
                                 <action selector="onCancel:" destination="8TQ-C7-yxl" id="YLe-kc-kUi"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="lqx-sm-LVp">
+                        <barButtonItem key="rightBarButtonItem" title="Search" id="lqx-sm-LVp">
                             <connections>
                                 <action selector="onSave:" destination="8TQ-C7-yxl" id="yWD-ii-cmZ"/>
                             </connections>

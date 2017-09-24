@@ -9,7 +9,7 @@
 import UIKit
 import MBProgressHUD
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIScrollViewDelegate {
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, UIScrollViewDelegate, FilterViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     
@@ -137,14 +137,27 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         }
     }
     
-    /*
+    // MARK: - Delegate
+    func filterViewController(filterViewController: FilterViewController, didUpdateFilters filter: [String: Any]){
+        let categories = filter["categories"] as? [String]
+        let isDeal = filter["deals"] as? Bool
+        
+        Business.searchWithTerm(term: "Resturants", offset: 0, sort: nil, categories: categories, deals: isDeal) { (businesses, error) in
+            self.businesses = businesses
+            self.tableView.reloadData()
+        }
+    }
+    
+    
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let navigationController = segue.destination as! UINavigationController
+        let filterViewController = navigationController.topViewController as! FilterViewController
+        filterViewController.delegate = self
+    }
+    
     
 }
